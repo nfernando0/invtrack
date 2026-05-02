@@ -22,6 +22,9 @@ class Create extends Component
     #[Validate('nullable|image|max:2048')]
     public $image;
 
+    #[Validate('required|exists:categories,id')]
+    public $category_id;
+
     public function mount()
     {
         abort_if(!auth()->user()->isAdmin(), 403, 'Unauthorized action.');
@@ -40,10 +43,11 @@ class Create extends Component
             'name' => $this->name,
             'stock' => $this->stock,
             'image' => $imagePath,
+            'category_id' => $this->category_id,
         ]);
 
         // Reset input setelah simpan agar form bersih kembali
-        $this->reset(['name', 'stock', 'image']);
+        $this->reset(['name', 'stock', 'image', 'category_id']);
 
         // Jika ini di dalam modal, Anda bisa menutupnya di sini
         session()->flash('message', 'Barang berhasil ditambahkan!');
@@ -52,6 +56,8 @@ class Create extends Component
     }
     public function render()
     {
-        return view('livewire.item.create');
+        return view('livewire.item.create', [
+            'categories' => \App\Models\Category::orderBy('name')->get()
+        ]);
     }
 }

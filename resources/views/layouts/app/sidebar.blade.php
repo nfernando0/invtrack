@@ -20,6 +20,10 @@
                     {{ __('Dashboard') }}
                 </flux:sidebar.item>
                 @if(auth()->user()->isAdmin())
+                    <flux:sidebar.item icon="tag" :href="route('category.index')" :current="request()->routeIs('category.*')"
+                        wire:navigate>
+                        {{ __('Category') }}
+                    </flux:sidebar.item>
                     <flux:sidebar.item icon="archive-box" :href="route('item.index')" :current="request()->routeIs('item.*')"
                         wire:navigate>
                         {{ __('Item') }}

@@ -14,6 +14,7 @@
         <flux:table class="mt-5">
             <flux:table.columns>
                 <flux:table.column>Nama</flux:table.column>
+                <flux:table.column>Kategori</flux:table.column>
                 <flux:table.column>Stock</flux:table.column>
                 <flux:table.column>Action</flux:table.column>
             </flux:table.columns>
@@ -43,6 +44,13 @@
                                 @endif
                                 <span>{{ $item->name }}</span>
                             </div>
+                        </flux:table.cell>
+                        <flux:table.cell>
+                            @if($item->category)
+                                <flux:badge size="sm" color="zinc">{{ $item->category->name }}</flux:badge>
+                            @else
+                                <span class="text-gray-500 italic text-sm">Tidak ada</span>
+                            @endif
                         </flux:table.cell>
                         <flux:table.cell>
                             @if($item->stock == 0)

@@ -39,6 +39,10 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('/item/create', App\Livewire\Item\Create::class)->name('item.create');
     Route::get('/item/edit/{item}', App\Livewire\Item\Edit::class)->name('item.edit');
 
+    Route::get('/category', App\Livewire\Category\Index::class)->name('category.index');
+    Route::get('/category/create', App\Livewire\Category\Create::class)->name('category.create');
+    Route::get('/category/edit/{category}', App\Livewire\Category\Edit::class)->name('category.edit');
+
     Route::get('/loan', App\Livewire\Loan\Index::class)->name('loan.index');
     Route::get('/loan/create', App\Livewire\Loan\Create::class)->name('loan.create');
     Route::get('/loan/edit/{loan}', App\Livewire\Loan\Edit::class)->name('loan.edit');

@@ -10,6 +10,11 @@
         <div class="md:w-1/4 w-full">
             <form wire:submit="update" class="mt-6 space-y-4">
                 <flux:input label="Nama Barang" wire:model="name" />
+                <flux:select wire:model="category_id" label="Kategori" placeholder="Pilih Kategori">
+                    @foreach ($categories as $category)
+                        <flux:select.option value="{{ $category->id }}">{{ $category->name }}</flux:select.option>
+                    @endforeach
+                </flux:select>
                 <flux:input label="Stok" type="number" wire:model="stock" />
                 <flux:field>
                     <flux:label>Gambar Barang</flux:label>

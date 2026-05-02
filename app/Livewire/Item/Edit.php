@@ -17,6 +17,7 @@ class Edit extends Component
     public $item;
     public $newImage;
     public $currentImage;
+    public $category_id;
 
     public function mount(Item $item)
     {
@@ -28,6 +29,7 @@ class Edit extends Component
         $this->name = $item->name;
         $this->stock = $item->stock;
         $this->currentImage = $item->image;
+        $this->category_id = $item->category_id;
     }
 
     public function update()
@@ -36,11 +38,13 @@ class Edit extends Component
             'name' => 'required|string|max:255',
             'stock' => 'required|integer|min:0',
             'newImage' => 'nullable|image|max:2048',
+            'category_id' => 'required|exists:categories,id',
         ]);
 
         $data = [
             'name' => $this->name,
             'stock' => $this->stock,
+            'category_id' => $this->category_id,
         ];
 
         if ($this->newImage) {
@@ -56,7 +60,8 @@ class Edit extends Component
     public function render()
     {
         return view('livewire.item.edit', [
-            'item' => $this->item
+            'item' => $this->item,
+            'categories' => \App\Models\Category::orderBy('name')->get()
         ]);
     }
 }

@@ -16,6 +16,17 @@
                 </flux:field>
 
                 <flux:field class="mt-5">
+                    <flux:label>Kategori</flux:label>
+                    <flux:select wire:model="category_id" placeholder="Pilih Kategori">
+                        <option value="">Pilih Kategori</option>
+                        @foreach ($categories as $category)
+                            <option value="{{ $category->id }}">{{ $category->name }}</option>
+                        @endforeach
+                    </flux:select>
+                    <flux:error name="category_id" />
+                </flux:field>
+
+                <flux:field class="mt-5">
                     <flux:label>Stock</flux:label>
                     <flux:input wire:model="stock" type="number" />
                     <flux:error name="stock" />
