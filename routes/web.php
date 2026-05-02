@@ -46,6 +46,8 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('/loan', App\Livewire\Loan\Index::class)->name('loan.index');
     Route::get('/loan/create', App\Livewire\Loan\Create::class)->name('loan.create');
     Route::get('/loan/edit/{loan}', App\Livewire\Loan\Edit::class)->name('loan.edit');
+
+    Route::get('/history', App\Livewire\History\Index::class)->name('history.index');
 });
 
 require __DIR__ . '/settings.php';

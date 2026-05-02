@@ -12,7 +12,7 @@
                 <flux:input wire:model.live.debounce.300ms="search" icon="magnifying-glass" placeholder="Cari barang, alasan..." class="w-48 sm:w-64" size="sm" />
                 
                 <flux:modal.trigger name="filter-modal">
-                    <flux:button icon="funnel" variant="ghost" size="sm">Filter Status</flux:button>
+                    <flux:button icon="funnel" variant="ghost" size="sm">Filter</flux:button>
                 </flux:modal.trigger>
                 @if(auth()->user()->isAdmin() && count($selectedLoans) > 0)
                     <flux:button variant="primary" icon="check-circle" wire:click="bulkApprove" size="sm">
@@ -285,19 +285,6 @@
                     </flux:select>
                     <flux:separator class="my-4" />
                 @endif
-                
-                <flux:heading size="sm">Status</flux:heading>
-                <flux:checkbox wire:model.live="statusFilter" value="pending" label="Pending" />
-                <flux:checkbox wire:model.live="statusFilter" value="approved" label="Approved" />
-                <flux:checkbox wire:model.live="statusFilter" value="returned" label="Returned" />
-                <flux:checkbox wire:model.live="statusFilter" value="rejected" label="Rejected" />
-                
-                <flux:separator class="my-4" />
-                
-                <flux:heading size="sm">Peringatan</flux:heading>
-                <flux:checkbox wire:model.live="isOverdue" label="Tampilkan Hanya yang Terlambat (Overdue)" />
-
-                <flux:separator class="my-4" />
                 
                 <flux:heading size="sm">Rentang Tanggal Peminjaman</flux:heading>
                 <div class="grid grid-cols-2 gap-2">

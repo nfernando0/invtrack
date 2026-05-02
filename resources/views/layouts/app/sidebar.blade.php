@@ -33,6 +33,10 @@
                     :current="request()->routeIs('loan.*')" wire:navigate>
                     {{ __('Loan') }}
                 </flux:sidebar.item>
+                <flux:sidebar.item icon="clock" :href="route('history.index')"
+                    :current="request()->routeIs('history.*')" wire:navigate>
+                    {{ __('History') }}
+                </flux:sidebar.item>
             </flux:sidebar.group>
         </flux:sidebar.nav>
 

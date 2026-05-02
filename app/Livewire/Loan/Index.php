@@ -16,9 +16,7 @@ class Index extends Component
     public $selectedLoan;
     public $selectedLoans = [];
     public $selectAll = false;
-    public $statusFilter = [];
     public $search = '';
-    public $isOverdue = false;
     public $userFilter = '';
     public $dateStart = '';
     public $dateEnd = '';
@@ -48,15 +46,8 @@ class Index extends Component
         $this->resetPage();
     }
 
-    public function updatedStatusFilter()
-    {
-        $this->resetPage();
-    }
-
     public function clearFilter()
     {
-        $this->statusFilter = [];
-        $this->isOverdue = false;
         $this->search = '';
         $this->userFilter = '';
         $this->dateStart = '';
@@ -256,19 +247,11 @@ class Index extends Component
 
     public function render()
     {
-        $query = Loan::with('items.item')->latest();
+        // Hanya tampilkan yang pending
+        $query = Loan::with('items.item')->where('status', 'pending')->latest();
         
         if (auth()->user()->isCustomer()) {
             $query->where('user_id', auth()->id());
-        }
-
-        if (!empty($this->statusFilter)) {
-            $query->whereIn('status', $this->statusFilter);
-        }
-
-        if ($this->isOverdue) {
-            $query->where('status', 'approved')
-                  ->whereDate('loan_date', '<', now());
         }
 
         if (!empty($this->search)) {
