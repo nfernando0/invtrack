@@ -1,0 +1,52 @@
+<!-- InvTrack Logo - SVG Version for Web -->
+<svg
+    xmlns="http://www.w3.org/2000/svg"
+    viewBox="0 0 280 80"
+    class="invtrack-logo"
+    aria-label="InvTrack Logo"
+    role="img"
+    style="height: auto; width: 100%; max-width: 280px;"
+>
+    <!-- Definisi Warna (Opsional, untuk kemudahan edit) -->
+    <defs>
+        <style>
+            .it-blue { fill: #1E40AF; } /* Biru Utama (Inv) */
+            .it-green { fill: #10B981; } /* Hijau Aksen (Track) */
+            .it-cube-top { fill: #3259D3; } /* Biru Lebih Terang untuk Sisi Atas */
+            .it-text-main { font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; font-weight: 700; font-size: 42px; }
+        </style>
+    </defs>
+
+    <!-- ============================================= -->
+    <!-- LOGOMARK (Ikon Kubus + Pin Negative Space) -->
+    <!-- ============================================= -->
+    <g transform="translate(10, 5)">
+        <!-- Sisi Depan Kiri Kubus -->
+        <path d="M0 22 L32 40 V75 L0 57 Z" class="it-blue"/>
+
+        <!-- Sisi Depan Kanan Kubus -->
+        <path d="M32 40 L64 22 V57 L32 75 Z" class="it-blue" opacity="0.85"/>
+
+        <!-- Sisi Atas Kubus -->
+        <path d="M0 22 L32 4 L64 22 L32 40 Z" class="it-cube-top"/>
+
+        <!--
+            Negative Space: Map Pin (Terpotong dari Sisi Atas)
+            Ini membuat bentuk putih transparan di atas kubus.
+        -->
+        <path d="M32 10 C27 10 23 14 23 19 C23 25 32 34 32 34 C32 34 41 25 41 19 C41 14 37 10 32 10 Z" fill="#FFFFFF"/>
+
+        <!-- Titik Pusat Presisi (Hijau) -->
+        <circle cx="32" cy="19" r="3.5" class="it-green"/>
+    </g>
+
+    <!-- ============================================= -->
+    <!-- WORDMARK (Teks InvTrack) -->
+    <!-- ============================================= -->
+    <g transform="translate(90, 55)">
+        <!-- Teks "Inv" -->
+        <text x="0" y="0" class="it-text-main it-blue">Inv</text>
+        <!-- Teks "Track" -->
+        <text x="68" y="0" class="it-text-main it-green">Track</text>
+    </g>
+</svg>
