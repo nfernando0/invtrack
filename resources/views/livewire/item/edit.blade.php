@@ -10,11 +10,15 @@
         <div class="md:w-1/4 w-full">
             <form wire:submit="update" class="mt-6 space-y-4">
                 <flux:input label="Nama Barang" wire:model="name" />
-                <flux:select wire:model="category_id" label="Kategori" placeholder="Pilih Kategori">
-                    @foreach ($categories as $category)
-                        <flux:select.option value="{{ $category->id }}">{{ $category->name }}</flux:select.option>
-                    @endforeach
-                </flux:select>
+                <flux:field>
+                    <flux:label>Kategori</flux:label>
+                    <div class="mt-2 grid grid-cols-1 sm:grid-cols-2 gap-2">
+                        @foreach ($categories as $category)
+                            <flux:checkbox wire:model="category_ids" value="{{ $category->id }}" label="{{ $category->name }}" />
+                        @endforeach
+                    </div>
+                    <flux:error name="category_ids" />
+                </flux:field>
                 <flux:input label="Stok" type="number" wire:model="stock" />
                 <flux:field>
                     <flux:label>Gambar Barang</flux:label>

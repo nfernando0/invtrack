@@ -46,8 +46,12 @@
                             </div>
                         </flux:table.cell>
                         <flux:table.cell>
-                            @if($item->category)
-                                <flux:badge size="sm" color="zinc">{{ $item->category->name }}</flux:badge>
+                            @if($item->categories->count() > 0)
+                                <div class="flex flex-wrap gap-1">
+                                    @foreach($item->categories as $category)
+                                        <flux:badge size="sm" color="zinc">{{ $category->name }}</flux:badge>
+                                    @endforeach
+                                </div>
                             @else
                                 <span class="text-gray-500 italic text-sm">Tidak ada</span>
                             @endif

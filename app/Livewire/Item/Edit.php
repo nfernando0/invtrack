@@ -17,7 +17,7 @@ class Edit extends Component
     public $item;
     public $newImage;
     public $currentImage;
-    public $category_id;
+    public $category_ids = [];
 
     public function mount(Item $item)
     {
@@ -29,7 +29,7 @@ class Edit extends Component
         $this->name = $item->name;
         $this->stock = $item->stock;
         $this->currentImage = $item->image;
-        $this->category_id = $item->category_id;
+        $this->category_ids = $item->categories->pluck('id')->toArray();
     }
 
     public function update()
@@ -38,13 +38,13 @@ class Edit extends Component
             'name' => 'required|string|max:255',
             'stock' => 'required|integer|min:0',
             'newImage' => 'nullable|image|max:2048',
-            'category_id' => 'required|exists:categories,id',
+            'category_ids' => 'required|array|min:1',
+            'category_ids.*' => 'exists:categories,id',
         ]);
 
         $data = [
             'name' => $this->name,
             'stock' => $this->stock,
-            'category_id' => $this->category_id,
         ];
 
         if ($this->newImage) {
@@ -52,6 +52,7 @@ class Edit extends Component
         }
 
         $this->item->update($data);
+        $this->item->categories()->sync($this->category_ids);
 
         session()->flash('message', 'Barang berhasil diperbaharui!');
         return redirect()->to('/item');

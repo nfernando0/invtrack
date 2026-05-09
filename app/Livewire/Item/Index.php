@@ -60,7 +60,7 @@ class Index extends Component
     public function render()
     {
         return view('livewire.item.index', [
-            'items' => Item::with('category')->paginate(5),
+            'items' => Item::with('categories')->paginate(5),
         ]);
     }
 }

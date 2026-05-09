@@ -17,13 +17,12 @@
 
                 <flux:field class="mt-5">
                     <flux:label>Kategori</flux:label>
-                    <flux:select wire:model="category_id" placeholder="Pilih Kategori">
-                        <option value="">Pilih Kategori</option>
+                    <div class="mt-2 grid grid-cols-1 sm:grid-cols-2 gap-2">
                         @foreach ($categories as $category)
-                            <option value="{{ $category->id }}">{{ $category->name }}</option>
+                            <flux:checkbox wire:model="category_ids" value="{{ $category->id }}" label="{{ $category->name }}" />
                         @endforeach
-                    </flux:select>
-                    <flux:error name="category_id" />
+                    </div>
+                    <flux:error name="category_ids" />
                 </flux:field>
 
                 <flux:field class="mt-5">

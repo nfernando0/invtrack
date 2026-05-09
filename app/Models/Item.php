@@ -12,11 +12,15 @@ class Item extends Model
         'name',
         'stock',
         'image',
-        'category_id',
     ];
 
-    public function category()
+    public function categories()
     {
-        return $this->belongsTo(Category::class);
+        return $this->belongsToMany(Category::class);
+    }
+
+    public function loanItems()
+    {
+        return $this->hasMany(LoanItem::class);
     }
 }

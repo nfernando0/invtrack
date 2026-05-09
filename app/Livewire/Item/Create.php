@@ -22,8 +22,11 @@ class Create extends Component
     #[Validate('nullable|image|max:2048')]
     public $image;
 
-    #[Validate('required|exists:categories,id')]
-    public $category_id;
+    #[Validate([
+        'category_ids' => 'required|array|min:1',
+        'category_ids.*' => 'exists:categories,id',
+    ])]
+    public $category_ids = [];
 
     public function mount()
     {
@@ -39,15 +42,16 @@ class Create extends Component
             $imagePath = $this->image->store('items', 'public');
         }
 
-        Item::create([
+        $item = Item::create([
             'name' => $this->name,
             'stock' => $this->stock,
             'image' => $imagePath,
-            'category_id' => $this->category_id,
         ]);
 
+        $item->categories()->sync($this->category_ids);
+
         // Reset input setelah simpan agar form bersih kembali
-        $this->reset(['name', 'stock', 'image', 'category_id']);
+        $this->reset(['name', 'stock', 'image', 'category_ids']);
 
         // Jika ini di dalam modal, Anda bisa menutupnya di sini
         session()->flash('message', 'Barang berhasil ditambahkan!');

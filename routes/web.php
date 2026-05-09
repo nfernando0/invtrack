@@ -32,7 +32,58 @@ Route::middleware(['auth', 'verified'])->group(function () {
         }
         $recentLoans = $recentLoansQuery->take(5)->get();
 
-        return view('dashboard', compact('totalLoanedItems', 'totalReturnedItems', 'totalAvailableItems', 'recentLoans'));
+        // Data for alerts
+        $pendingLoansCount = 0;
+        $lowStockItemsCount = 0;
+        $overdueLoansCount = 0;
+        $upcomingReturnsCount = 0;
+
+        if ($user->isAdmin()) {
+            $pendingLoansCount = \App\Models\Loan::where('status', 'pending')->count();
+            $lowStockItemsCount = \App\Models\Item::where('stock', '<=', 5)->count();
+        } else {
+            $overdueLoansCount = \App\Models\Loan::where('user_id', $user->id)
+                ->where('status', 'approved')
+                ->whereDate('loan_date', '<', now()->toDateString())
+                ->count();
+                
+            $upcomingReturnsCount = \App\Models\Loan::where('user_id', $user->id)
+                ->where('status', 'approved')
+                ->whereBetween('loan_date', [now()->toDateString(), now()->addDays(3)->toDateString()])
+                ->count();
+        }
+
+        $popularItems = \App\Models\Item::whereHas('loanItems', function($query) use ($user) {
+            $query->whereHas('loan', function($q) use ($user) {
+                $q->whereIn('status', ['approved', 'returned']);
+                if ($user->isCustomer()) {
+                    $q->where('user_id', $user->id);
+                }
+            });
+        })
+        ->withSum(['loanItems as total_borrowed' => function($query) use ($user) {
+            $query->whereHas('loan', function($q) use ($user) {
+                $q->whereIn('status', ['approved', 'returned']);
+                if ($user->isCustomer()) {
+                    $q->where('user_id', $user->id);
+                }
+            });
+        }], 'quantity')
+        ->orderByDesc('total_borrowed')
+        ->take(5)
+        ->get();
+
+        return view('dashboard', compact(
+            'totalLoanedItems', 
+            'totalReturnedItems', 
+            'totalAvailableItems', 
+            'recentLoans',
+            'pendingLoansCount',
+            'lowStockItemsCount',
+            'overdueLoansCount',
+            'upcomingReturnsCount',
+            'popularItems'
+        ));
     })->name('dashboard');
 
     Route::get('/item', App\Livewire\Item\Index::class)->name('item.index');
